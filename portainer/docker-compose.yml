@@ -4,7 +4,7 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     environment:
-      - TZ=Europe/Moscow
+      - TZ=Asia/Novosibirsk
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/portainer/portainer_data:/data
