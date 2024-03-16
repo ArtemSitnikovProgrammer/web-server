@@ -8,5 +8,5 @@
 
 - Portainer
 - Traefik
-- My website sitnikovap.ru
-- 
+- WordPress, создаю свой сайт sitnikovap.ru 
+- Grafana, Prometheus
