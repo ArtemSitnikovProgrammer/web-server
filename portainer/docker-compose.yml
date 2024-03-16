@@ -7,8 +7,17 @@ services:
       - TZ=Asia/Novosibirsk
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/portainer/portainer_data:/data
-    ports:
-      - "8000:8000"
-      - "9443:9443"
+      - /opt/web-server/portainer/portainer_data:/data
+#    ports:
+#      - "8000:8000"
+#      - "9443:9443"
     restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.sitnikovap.ru`)"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+networks:
+  default:
+    name: proxynet
+    external: true

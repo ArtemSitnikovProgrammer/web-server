@@ -1,0 +1,41 @@
+version: '3.5'
+
+services:
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    restart: always
+
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: $MYSQL_USER
+      WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
+      WORDPRESS_DB_NAME: $MYSQL_DATABASE
+    volumes:
+      - /opt/web-server/wordpress/www/html:/var/www/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wordpress.rule=Host(`wordpress.sitnikovap.ru`)"
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    volumes:
+      - /opt/web-server/wordpress/mysql:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
+
+networks:
+  default:
+    name: proxynet
+    external: true
